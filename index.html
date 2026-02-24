@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEMINAGRO | Integração e Soluções</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos Extras (Login e Bloqueio) */
+        .auth-buttons { display: flex; gap: 10px; margin-left: 20px; }
+        .btn-login { background: transparent; border: 1px solid var(--primary-green); color: var(--primary-green); padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-login:hover { background: var(--primary-green); color: white; }
+        
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #aaa; }
+        .modal-content h3 { color: var(--primary-green); margin-bottom: 20px; }
+        .modal-content input { width: 100%; margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .modal-content button { width: 100%; padding: 10px; background: var(--primary-green); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        .modal-content button:hover { background: var(--dark-green); }
+        .toggle-link { margin-top: 15px; font-size: 0.9rem; cursor: pointer; color: #1976D2; text-decoration: underline; }
+
+        /* Área Bloqueada */
+        .locked-area { text-align: center; padding: 40px; background: #e8f5e9; border: 1px dashed var(--primary-green); border-radius: 8px; margin-top: 10px; }
+        .locked-area i { font-size: 3rem; color: var(--primary-green); margin-bottom: 15px; }
+        .locked-area h4 { color: #333; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">SEMINAGRO</div>
+        <ul class="nav-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#quem-somos">Quem Somos</a></li>
+            <li><a href="#ferramentas">Ferramentas</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li id="nav-auth">
+                <button class="btn-login" onclick="abrirLogin()">Entrar / Cadastrar</button>
+            </li>
+        </ul>
+        <div class="menu-btn"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="carousel">
+            <div class="slide active" style="background-image: url('carousel-leite.jpg');"></div>
+            <div class="slide" style="background-image: url('carousel-bufalos.jpg');"></div>
+            <div class="slide" style="background-image: url('carousel-nelore.jpg');"></div>
+        </div>
+        <div class="hero-content">
+            <h1>SEMINAGRO</h1>
+            <p>Uma plataforma para apoiar pecuaristas de corte e leite.</p>
+            <a href="#ferramentas" class="btn-cta">Acessar Ferramentas</a>
+        </div>
+    </header>
+
+    <section id="quem-somos" class="section-light">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Sobre o SEMINAGRO</h2>
+                    <p class="highlight-text">Uma plataforma para apoiar pecuaristas de corte e leite.</p>
+                    <p>O SEMINAGRO é uma plataforma digital criada para facilitar a vida do pecuarista de corte e leite, conectando compra e venda de animais e matéria-prima de forma simples, segura e eficiente.</p>
+                    <p>Nascemos dentro do programa CNA Jovem, com o propósito de impulsionar o desenvolvimento socioeconômico e ambiental da pecuária na região Amazônica.</p>
+                </div>
+                <div class="about-image">
+                    <img src="quem-somos-pasto.jpg" alt="Gado Nelore no pasto">
+                </div>
+            </div>
+
+            <div class="history-block">
+                <div class="history-content">
+                    <h3>Nossa História</h3>
+                    <p>O SEMINAGRO surgiu da necessidade de reduzir barreiras que atrapalham o produtor rural. Percebemos desafios nas negociações e conexões.</p>
+                    <p>Trabalhamos para aproximar pecuaristas, identificar problemas e conectar demandas aos parceiros certos.</p>
+                </div>
+                <div class="history-img">
+                    <img src="historia-drone.jpg" alt="Drone na agricultura">
+                </div>
+            </div>
+
+            <div class="mvv-grid">
+                <div class="card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Missão</h3>
+                    <p>Conectar pecuaristas com oportunidades de negócios e conhecimento.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Visão</h3>
+                    <p>Ser ferramenta de apoio ao desenvolvimento da pecuária sustentável.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Valores</h3>
+                    <p>Cooperação, Inovação e Sustentabilidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ferramentas" class="section-dark">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ferramentas</h2>
+                <p>Selecione o que você precisa hoje</p>
+            </div>
+
+            <div class="tools-menu">
+                <button class="tool-btn active" onclick="showTool('compra-venda')">
+                    <i class="fas fa-exchange-alt"></i> Compra e Venda
+                </button>
+                <button class="tool-btn" onclick="showTool('conhecimento')">
+                    <i class="fas fa-graduation-cap"></i> Conhecimento
+                </button>
+                <button class="tool-btn" onclick="showTool('apoio')">
+                    <i class="fas fa-seedling"></i> Inovação
+                </button>
+                <button class="tool-btn" onclick="showTool('problemas')">
+                    <i class="fas fa-bullhorn"></i> Captação de Problemas
+                </button>
+            </div>
+
+            <div id="tool-content" class="tool-display">
+                
+                <div id="compra-venda" class="tool-panel active">
+                    <div class="panel-intro">
+                        <h3>Mural de Negócios</h3>
+                        <p>Descubra oportunidades de mercado ou anuncie seus produtos.</p>
+                    </div>
+
+                    <div class="split-view">
+                        <div class="form-container">
+                            
+                            <div id="areaLogada" style="display: none;">
+                                <h4><i class="fas fa-plus-circle"></i> Criar Novo Anúncio</h4>
+                                <form id="adForm">
+                                    <label>Qual tipo de anúncio?</label>
+                                    <select id="adType" onchange="updateFormFields()">
+                                        <option value="">Selecione...</option>
+                                        <option value="corte">Animais para Corte</option>
+                                        <option value="plantel">Animais para Formação de Plantel</option>
+                                        <option value="leite">Leite</option>
+                                        <option value="silagem">Silagem</option>
+                                    </select>
+
+                                    <div id="dynamicFields"></div>
+
+                                    <div class="common-fields" style="display:none;" id="commonFields">
+                                        <div class="form-row">
+                                            <div style="flex: 2;">
+                                                <label>Município</label>
+                                                <input type="text" id="inputMunicipio" placeholder="Ex: Manaus" required>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <label>UF</label>
+                                                <select id="inputUF" required>
+                                                    <option value="">UF</option>
+                                                    <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
+                                                    <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
+                                                    <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+                                                    <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
+                                                    <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+                                                    <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option>
+                                                    <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
+                                                    <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
+                                                    <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <label>Contato (WhatsApp)</label>
+                                        <input type="text" id="inputContato" placeholder="(XX) XXXXX-XXXX" required>
+                                        
+                                        <label>Fotos (Capa do Anúncio)</label>
+                                        <input type="file" id="inputFoto" accept="image/*">
+                                        <p style="font-size:0.8rem; color:#666;">*Por enquanto, apenas ilustrativo.</p>
+
+                                        <button type="submit" class="btn-submit">Publicar Anúncio</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div id="areaBloqueada" class="locked-area">
+                                <i class="fas fa-lock"></i>
+                                <h4>Quer anunciar seus produtos?</h4>
+                                <p>Faça login ou cadastre-se gratuitamente.</p>
+                                <button class="btn-submit" onclick="abrirLogin()">Entrar para Anunciar</button>
+                            </div>
+
+                        </div>
+
+                        <div class="mural-container">
+                            <div class="filters">
+                                <input type="text" id="filterKeyword" placeholder="Buscar palavra-chave..." onkeyup="filtrarMural()">
+                                <select id="filterState" onchange="filtrarMural()">
+                                    <option value="">Todos os Estados</option>
+                                    <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
+                                    <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
+                                    <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+                                    <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
+                                    <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+                                    <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option>
+                                    <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
+                                    <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
+                                    <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                                </select>
+                                <select id="filterCategory" onchange="filtrarMural()"><option value="">Todas Categorias</option></select>
+                            </div>
+                            <div id="muralGrid" class="mural-grid"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="conhecimento" class="tool-panel" style="display:none;">
+                    <h3>Conhecimento Técnico</h3>
+                    <p>Acesse cursos e materiais técnicos através de nossos parceiros.</p>
+                    <div class="content-row">
+                        <div class="card-link">
+                            <img src="logo-senar.png" alt="Senar">
+                            <h4>SENAR PLAY</h4>
+                            <p>Cursos online e material técnico especializado.</p>
+                            <a href="https://ead.senar.org.br/" target="_blank" class="btn-link">Acessar Plataforma <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="apoio" class="tool-panel" style="display:none;">
+                    <h3>Apoio ao Desenvolvimento da Cadeia Produtiva</h3>
+                    <div class="support-grid">
+                        <div class="support-card">
+                            <img src="logo-sebrae.png" alt="SebraeTec" style="height: 50px; margin-bottom: 10px;">
+                            <h4>Inovação e Tecnologia</h4>
+                            <p>Soluções tecnológicas via SEBRATEC.</p>
+                            <a href="https://sebrae.com.br/sites/PortalSebrae/sebraetec" target="_blank" class="btn-link">Conhecer SEBRATEC</a>
+                        </div>
+                        <div class="support-card">
+                            <img src="logo-cna.png" alt="Retificar" style="height: 50px; margin-bottom: 10px;">
+                            <h4>Regularização Ambiental</h4>
+                            <p>Programa RETIFICAR da CNA.</p>
+                            <a href="https://www.cnabrasil.org.br/projetos-e-programas/retificar" target="_blank" class="btn-link">Conhecer RETIFICAR</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="problemas" class="tool-panel" style="display:none;">
+                    <h3>Reportar Problemas da Região</h3>
+                    <p>Exponha o que tem gerado impacto negativo na sua produção.</p>
+                    <form id="problemForm" class="simple-form">
+                        <div class="form-row">
+                            <div>
+                                <label>Comunidade / Região</label>
+                                <input type="text" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div style="flex: 2;">
+                                <label>Município</label>
+                                <input type="text" required>
+                            </div>
+                            <div style="flex: 1;">
+                                <label>UF</label>
+                                <select required>
+                                    <option value="">UF</option>
+                                    <option value="AC">AC</option><option value="AM">AM</option><option value="AP">AP</option>
+                                    <option value="PA">PA</option><option value="RO">RO</option><option value="RR">RR</option>
+                                    <option value="TO">TO</option><option value="MA">MA</option><option value="MT">MT</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label>Categoria do Problema</label>
+                        <select required>
+                            <option value="infraestrutura">Infraestrutura</option>
+                            <option value="ambiental">Ambiental</option>
+                            <option value="fundiario">Fundiário</option>
+                            <option value="credito">Crédito Rural</option>
+                            <option value="logistica">Logística</option>
+                            <option value="saude_mental">Saúde Mental</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                        <label>Descreva o problema</label>
+                        <textarea rows="4" required></textarea>
+                        <button type="submit" class="btn-submit">Enviar Relato</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <h3>Fale Conosco</h3>
+                    <p><i class="fas fa-envelope"></i> [e-mail removido por segurança]</p>
+                    <p><i class="fas fa-phone"></i> [telefone removido por segurança]</p>
+                    <p><i class="fab fa-instagram"></i> @seminagro</p>
+                </div>
+                <div class="footer-note">
+                    <p>&copy; 2025 SEMINAGRO. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content" id="formLogin">
+            <span class="close-modal" onclick="fecharAuth()">&times;</span>
+            <h3>Bem-vindo de volta!</h3>
+            <input type="email" id="loginEmail" placeholder="Seu E-mail">
+            <input type="password" id="loginSenha" placeholder="Sua Senha">
+            <button onclick="fazerLogin()">Entrar</button>
+            <p class="toggle-link" onclick="toggleAuth('cadastro')">Não tem conta? Cadastre-se</p>
+        </div>
+        <div class="modal-content" id="formCadastro" style="display: none;">
+            <span class="close-modal" onclick="fecharAuth()">&times;</span>
+            <h3>Crie sua conta</h3>
+            <input type="text" id="cadNome" placeholder="Nome Completo">
+            <input type="email" id="cadEmail" placeholder="Seu E-mail">
+            <input type="password" id="cadSenha" placeholder="Crie uma Senha">
+            <button onclick="fazerCadastro()">Cadastrar</button>
+            <p class="toggle-link" onclick="toggleAuth('login')">Já tem conta? Faça login</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

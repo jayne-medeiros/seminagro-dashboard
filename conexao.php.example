@@ -1,0 +1,16 @@
+<?php
+// Template para conexao.php
+// Copie este arquivo para conexao.php e preencha com seus dados locais
+
+$host = "localhost";
+$dbname = "nome_do_seu_banco"; 
+$username = "usuario_do_banco";
+$password = "sua_senha_aqui";
+
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    echo "Erro na conexão: " . $e->getMessage();
+}
+?>
